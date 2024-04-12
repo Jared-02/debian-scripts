@@ -60,11 +60,10 @@ esac
 ${SUDO} apt-get update
 ${SUDO} apt-get -y install curl
 
-
 download_url="$base_url/v$version/gost_${version}_${os}_${cpu_arch}.tar.gz"
 
 echo "Downloading gost version $version..."
-curl -fsSL -o gost.tar.gz $download_url || { echo "Failed to download gost."; exit 1; }
+curl -L -o gost.tar.gz $download_url || { echo "Failed to download gost."; exit 1; }
 
 # Extract and install the binary
 echo "Installing gost..."
@@ -99,7 +98,6 @@ EOF
 # Enable and start the service
 ${SUDO} chmod 644 /etc/systemd/system/gost.service
 ${SUDO} systemctl daemon-reload
-${SUDO} systemctl start gost
 ${SUDO} systemctl enable gost
 
 echo "gost service installed!"
