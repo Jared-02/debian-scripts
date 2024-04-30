@@ -1,5 +1,5 @@
 #!/bin/sh
-# To add this repository please do:
+# Add Nginx Mainline Repo and Install it ~
 
 if [ "$(whoami)" != "root" ]; then
     SUDO=sudo
@@ -17,3 +17,6 @@ curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | ${SUDO} tee /usr
 echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/mainline/debian $(lsb_release -cs) nginx" | ${SUDO} tee /etc/apt/sources.list.d/nginx.list
 echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" | ${SUDO} tee /etc/apt/preferences.d/99nginx
 ${SUDO} apt-get update
+${SUDO} apt-get -y install nginx
+${SUDO} systemctl enable nginx
+${SUDO} systemctl start nginx
