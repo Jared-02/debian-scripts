@@ -62,7 +62,7 @@ sudo timedatectl set-timezone "$timezone"
 
 # Uninstall ntp and chrony packages if installed
 # Reference: https://stackoverflow.com/questions/1298066
-if dpkg-query -W -f='${Status}' chrony | grep "ok installed" > /dev/null 2>&1; then
+if dpkg-query -W -f='${Status}' chrony | grep "ok installed"; then
     echo "Removing chrony packages..."
     sudo apt-get purge -y 'chrony*'
 fi
