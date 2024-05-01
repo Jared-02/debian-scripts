@@ -1,9 +1,13 @@
 #!/bin/bash
 
+GREEN='\033[1;32m'
+RED='\033[1;31m'
+NC='\033[0m'
+
 # Check if sudo is installed
 if ! command -v sudo &> /dev/null
 then
-    echo "sudo is not installed. Please run 'apt install -y sudo' first."
+    echo "${RED}sudo is not installed.${NC} Please run 'apt install -y sudo' first."
     exit 1
 fi
 
@@ -35,4 +39,4 @@ sudo mkdir /etc/nginx/sites-available /etc/nginx/sites-enabled
 cd ..
 sudo rm -rf "$TMP_DIR"
 
-echo "Successfully!"
+echo "${GREEN}Success!${NC}"
