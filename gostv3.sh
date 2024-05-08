@@ -4,6 +4,10 @@ if [ "$(whoami)" != "root" ]; then
     SUDO=sudo
 fi
 
+GREEN='\033[1;32m'
+RED='\033[1;31m'
+NC='\033[0m'
+
 # Set the desired GitHub repository
 repo="go-gost/gost"
 base_url="https://github.com/$repo/releases/download"
@@ -72,7 +76,7 @@ ${SUDO} chmod +x gost
 ${SUDO} mv gost /usr/local/bin/gost
 ${SUDO} rm LICENSE README.md README_en.md gost.tar.gz
 
-echo "gost binary installed!"
+echo -e "${GREEN}gost binary installed!${NC}"
 
 # Create a systemd service for gost
 if [ -f /etc/systemd/system/gost.service ]; then
@@ -100,4 +104,4 @@ ${SUDO} chmod 644 /etc/systemd/system/gost.service
 ${SUDO} systemctl daemon-reload
 ${SUDO} systemctl enable gost
 
-echo "gost service installed!"
+echo -e "${GREEN}gost service installed!${NC}"
