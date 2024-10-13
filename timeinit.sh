@@ -14,7 +14,7 @@ fi
 function display_help() {
     echo "Usage: timeinit.sh [-h|--help] [-t|--timezone <str>] [-r|--region <str>]"
     echo "    -t, --timezone   Set timezone (required, e.g. 'Asia/Shanghai')"
-    echo "    -r, --region     Set NTP server region (optional, e.g. 'cn', 'hk')"
+    echo "    -r, --region     Set NTP server region (optional, e.g. 'cn', 'hk', 'aws')"
 }
 
 # Parse command line arguments
@@ -46,16 +46,21 @@ done
 
 # Check if timezone is provided
 if [[ -z $timezone ]]; then
-  display_help
-  exit 1
+    display_help
+    exit 1
 fi
 
-# Set NTP server region
-if [[ -n $region ]]; then
-  region="${region}."
+# Set NTP server based on region
+if [[ $region == "aws" ]]; then
+    ntp_server="NTP=169.254.169.123"
+    fallback_ntp_server="FallbackNTP=fd00:ec2::123"
+else
+    if [[ -n $region ]]; then
+        region="${region}."
+    fi
+    ntp_server="NTP=${region}pool.ntp.org"
+    fallback_ntp_server="FallbackNTP=0.${region}pool.ntp.org 1.${region}pool.ntp.org 2.${region}pool.ntp.org 3.${region}pool.ntp.org"
 fi
-ntp_server="NTP=${region}pool.ntp.org"
-fallback_ntp_server="FallbackNTP=0.${region}pool.ntp.org 1.${region}pool.ntp.org 2.${region}pool.ntp.org 3.${region}pool.ntp.org"
 
 # Set system timezone
 sudo timedatectl set-timezone "$timezone"
