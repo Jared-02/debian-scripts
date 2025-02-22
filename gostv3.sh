@@ -11,7 +11,7 @@ NC='\033[0m'
 # Set the desired GitHub repository
 repo="go-gost/gost"
 base_url="https://github.com/$repo/releases/download"
-version="3.0.0-nightly.20240201"
+version="3.0.0"
 
 # Detect the operating system
 if [[ "$(uname)" == "Linux" ]]; then
